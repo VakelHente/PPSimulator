@@ -1,2 +1,2 @@
-python createUiPy.py
+python setUp.py
 pause

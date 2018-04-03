@@ -1,4 +1,5 @@
 import sys
+import os
 
 try:
     from colorama import Fore
@@ -37,12 +38,25 @@ def printYellow(text):
 
 def printBrightGreen(text):
     """
-        Print provided string on red.
+    Print provided string on red.
 
-        @param text : String to print
-        @return     : None
-        """
+    @param text : String to print
+    @return     : None
+    """
     print("{}{} {}{}".format(Fore.GREEN, Style.BRIGHT, text, Fore.RESET))
+
+def disableEnablePrint(isDebug=False):
+    """
+    Depends on bool argument (isDebug) disable or enable print to output.
+
+    @param debug : Bool to disable or enable print.
+    @return      : None
+    """
+    if isDebug:
+        sys.stdout = sys.__stdout__
+    else:
+        sys.stdout = open(os.devnull, 'w')
+
 
 if __name__ == "__main__":
     pass

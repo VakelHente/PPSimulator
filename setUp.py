@@ -18,12 +18,12 @@ def main():
             print("-E- {}".format(stderr))
             errorCounter += 1
         else:
-            print("-I- File {}.py finished successfully")
+            print("-I- File {}.py created successfully".format(uiFile))
 
     if(errorCounter == NO_ERROR):
-        print("-I- Script finished successfully")
+        print("\n-I- Script finished successfully")
     else:
-        print("-E- Script finished with failure")
+        print("\n-E- Script finished with failure")
 
 if __name__ == "__main__":
     main()

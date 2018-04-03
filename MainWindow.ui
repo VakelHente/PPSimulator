@@ -202,7 +202,7 @@
        <set>Qt::ImhPreferNumbers</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnStart_single">
+     <widget class="QPushButton" name="btnStart_Single">
       <property name="geometry">
        <rect>
         <x>212</x>
