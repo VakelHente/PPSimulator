@@ -1,2 +1,0 @@
-python setUp.py
-pause
