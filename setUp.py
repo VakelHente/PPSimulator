@@ -1,7 +1,16 @@
-from subprocess import Popen
 import os
+import sys
+from subprocess import check_call, PIPE, call, Popen
 
-listUiFiles = ["GraphCreator", "MainWindow", "ProtocolCreator"]
+try:
+    import settings
+    from util_lib.utilityPrint import printRed
+    from util_lib.utilityReader import processCommand
+except ImportError as error:
+    printRed(error)
+    sys.exit(settings.ErrorCode.ERROR_IMPORT)
+
+listUiFiles = ["GraphCreator", "ppSimulator", "ProtocolCreator"]
 dir_path = os.path.dirname(os.path.realpath(__file__))
 errorCounter = 0
 NO_ERROR = 0
@@ -11,14 +20,10 @@ def main():
     for uiFile in listUiFiles:
         print("-I- Create {}.py file".format(uiFile))
         command = "pyuic5 {0}.ui -o {0}UI.py".format(uiFile)
-        process = Popen(command, cwd=dir_path)
-        stdout, stderr = process.communicate()
-        if stdout or stderr:
-            print("-E- {}".format(stdout))
-            print("-E- {}".format(stderr))
-            errorCounter += 1
+        if processCommand(command, dir_path):
+            print("-I- File {}UI.py was created".format(uiFile))
         else:
-            print("-I- File {}.py created successfully".format(uiFile))
+            errorCounter += 1
 
     if(errorCounter == NO_ERROR):
         print("\n-I- Script finished successfully")
