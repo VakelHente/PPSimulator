@@ -1,20 +1,32 @@
 import sys
+import platform
 import argparse
 
 try:
-    from util_lib.utilityPrint import printRed, disableEnablePrint
+    from util_lib.utilityPrint import printRed
+    from util_lib.utilityPrint import disableEnablePrint
+    from colorama import init
     import settings as st
-    from MainWindowUI import Ui_MainWindow
+    from ppSimulatorUI import Ui_MainWindow
+    from graphCreator import GraphCreator
+    from protocolCreator import ProtocolCreator
     from PyQt5 import QtCore, QtGui, QtWidgets
 except ImportError as error:
     printRed(error)
     sys.exit(st.ErrorCode.ERROR_IMPORT)
+
+if platform.system() == "Windows":
+    init()
 
 class Main(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # Create object of other windows
+        self.graphCreator = QtWidgets.QMainWindow()
+        self.protocolCreator = QtWidgets.QMainWindow()
 
         # Assign method on click to push button
         self.ui.btnGraphCreate_Single.clicked.connect(self.btnGraphCreate_Single_on_click)
@@ -35,7 +47,9 @@ class Main(QtWidgets.QMainWindow):
 
     @QtCore.pyqtSlot()
     def btnGraphCreate_Single_on_click(self):
-        pass
+        GraphCreator(self.graphCreator)
+        self.graphCreator.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.graphCreator.show()
 
     @QtCore.pyqtSlot()
     def btnGraphFromFile_Single_on_click(self):
@@ -43,7 +57,9 @@ class Main(QtWidgets.QMainWindow):
 
     @QtCore.pyqtSlot()
     def btnProtocolCreate_on_click(self):
-        pass
+        ProtocolCreator(self.protocolCreator)
+        self.protocolCreator.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.protocolCreator.show()
 
     @QtCore.pyqtSlot()
     def btnProtocolFromFile_on_click(self):
