@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>908</width>
-    <height>709</height>
+    <height>696</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>908</width>
-    <height>709</height>
+    <height>696</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>908</width>
-    <height>709</height>
+    <height>696</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
       <x>10</x>
       <y>10</y>
       <width>234</width>
-      <height>651</height>
+      <height>641</height>
      </rect>
     </property>
     <property name="title">
@@ -51,7 +51,7 @@
       <string>X - Input Alphabet:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="textBox_InputAlphabet">
+    <widget class="QLineEdit" name="textBox_inputAlphabet">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -72,16 +72,6 @@
      </property>
      <property name="text">
       <string>Add</string>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="listBox_inputAlphabet">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>131</width>
-       <height>131</height>
-      </rect>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_clearInputAlphabet">
@@ -146,16 +136,6 @@
       </rect>
      </property>
     </widget>
-    <widget class="QTextEdit" name="listBox_stateAlphabet">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>293</y>
-       <width>131</width>
-       <height>131</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
@@ -186,7 +166,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>580</y>
+       <y>572</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -195,21 +175,11 @@
       <string>Remove</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="listBox_OutputAlphabet">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>503</y>
-       <width>131</width>
-       <height>131</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>443</y>
+       <y>435</y>
        <width>131</width>
        <height>20</height>
       </rect>
@@ -218,11 +188,11 @@
       <string>Y - Output Alphabet:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="textBox_OutputAlphabet">
+    <widget class="QLineEdit" name="textBox_outputAlphabet">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>473</y>
+       <y>465</y>
        <width>131</width>
        <height>23</height>
       </rect>
@@ -232,7 +202,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>610</y>
+       <y>602</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -245,13 +215,43 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>473</y>
+       <y>465</y>
        <width>75</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
       <string>Add</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_inputAlphabet">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>131</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_stateAlphabet">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>293</y>
+       <width>131</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_outputAlphabet">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>495</y>
+       <width>131</width>
+       <height>131</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -261,7 +261,7 @@
       <x>250</x>
       <y>10</y>
       <width>371</width>
-      <height>651</height>
+      <height>641</height>
      </rect>
     </property>
     <property name="title">
@@ -271,7 +271,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>170</y>
+       <y>167</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -280,23 +280,13 @@
       <string>Remove</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="listBox_inputFunction">
+    <widget class="QComboBox" name="comboBox_firstElemOfInputFunc">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>93</y>
-       <width>261</width>
-       <height>131</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox_FirstElemOfInputFunc">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>63</y>
+       <y>60</y>
        <width>111</width>
-       <height>22</height>
+       <height>23</height>
       </rect>
      </property>
     </widget>
@@ -304,7 +294,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>62</y>
+       <y>59</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -313,13 +303,13 @@
       <string>Add</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_SecondElemOfInputFunc">
+    <widget class="QComboBox" name="comboBox_secondElemOfInputFunc">
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>63</y>
+       <y>60</y>
        <width>111</width>
-       <height>22</height>
+       <height>23</height>
       </rect>
      </property>
     </widget>
@@ -327,7 +317,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>200</y>
+       <y>197</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -340,7 +330,7 @@
      <property name="geometry">
       <rect>
        <x>134</x>
-       <y>65</y>
+       <y>62</y>
        <width>21</width>
        <height>20</height>
       </rect>
@@ -353,7 +343,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>33</y>
+       <y>30</y>
        <width>131</width>
        <height>20</height>
       </rect>
@@ -366,7 +356,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>380</y>
+       <y>370</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -375,21 +365,11 @@
       <string>Remove</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="listBox_StatesFunction">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>300</y>
-       <width>261</width>
-       <height>131</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QPushButton" name="btn_addToStatesFunction">
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>269</y>
+       <y>263</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -398,13 +378,13 @@
       <string>Add</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_SecondElemOfStatesFunc">
+    <widget class="QComboBox" name="comboBox_secondElemOfStatesFunc">
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>270</y>
+       <y>263</y>
        <width>111</width>
-       <height>22</height>
+       <height>23</height>
       </rect>
      </property>
     </widget>
@@ -412,7 +392,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>408</y>
+       <y>400</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -421,13 +401,13 @@
       <string>Clear</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_FirstElemOfStatesFunc">
+    <widget class="QComboBox" name="comboBox_firstElemOfStatesFunc">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>270</y>
+       <y>263</y>
        <width>111</width>
-       <height>22</height>
+       <height>23</height>
       </rect>
      </property>
     </widget>
@@ -435,7 +415,7 @@
      <property name="geometry">
       <rect>
        <x>134</x>
-       <y>272</y>
+       <y>265</y>
        <width>21</width>
        <height>20</height>
       </rect>
@@ -448,7 +428,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>240</y>
+       <y>233</y>
        <width>131</width>
        <height>20</height>
       </rect>
@@ -461,7 +441,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>590</y>
+       <y>572</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -470,13 +450,13 @@
       <string>Remove</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_FirstElemOfOutpuFunc">
+    <widget class="QComboBox" name="comboBox_firstElemOfOutpuFunc">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>480</y>
+       <y>465</y>
        <width>111</width>
-       <height>22</height>
+       <height>23</height>
       </rect>
      </property>
     </widget>
@@ -484,7 +464,7 @@
      <property name="geometry">
       <rect>
        <x>134</x>
-       <y>482</y>
+       <y>467</y>
        <width>21</width>
        <height>20</height>
       </rect>
@@ -497,7 +477,7 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>618</y>
+       <y>602</y>
        <width>75</width>
        <height>25</height>
       </rect>
@@ -506,21 +486,11 @@
       <string>Clear</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="listBox_OutputFunction">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>510</y>
-       <width>261</width>
-       <height>131</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_11">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>450</y>
+       <y>435</y>
        <width>131</width>
        <height>20</height>
       </rect>
@@ -529,11 +499,11 @@
       <string>Input Function (X -&gt; Q):</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_SecondElemOfOutpuFunc">
+    <widget class="QComboBox" name="comboBox_secondElemOfOutpuFunc">
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>480</y>
+       <y>465</y>
        <width>111</width>
        <height>22</height>
       </rect>
@@ -543,13 +513,43 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>479</y>
+       <y>465</y>
        <width>75</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
       <string>Add</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_inputFunction">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>261</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_statesFunction">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>293</y>
+       <width>261</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_outputFunction">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>495</y>
+       <width>261</width>
+       <height>131</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -578,7 +578,7 @@
       <string>Protocol's file name:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="lineEdit_protocolName">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -601,7 +601,7 @@
       <string>Save protocol in:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="lineEdit_pathProtocol">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -611,7 +611,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_BrowseProtocolDir">
+    <widget class="QPushButton" name="btn_browseProtocolDir">
      <property name="geometry">
       <rect>
        <x>170</x>
@@ -650,7 +650,7 @@
       <string>Type of protocol:</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_Majority">
+    <widget class="QRadioButton" name="radioButton_majority">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -662,8 +662,11 @@
      <property name="text">
       <string>Majority</string>
      </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_LiderElection">
+    <widget class="QRadioButton" name="radioButton_liderElection">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -677,7 +680,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="btn_SaveProtocol">
+   <widget class="QPushButton" name="btn_saveProtocol">
     <property name="geometry">
      <rect>
       <x>780</x>

@@ -9,12 +9,11 @@ except ImportError as error:
     printRed(error)
     sys.exit(st.ErrorCode.ERROR_IMPORT)
 
-class GraphCreator(QtWidgets.QMainWindow):
+class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
 
     def __init__(self, window):
         super().__init__()
-        self.ui = Ui_GraphCreator()
-        self.ui.setupUi(window)
+        self.setupUi(self)
 
 if __name__ == "__main__":
     pass
