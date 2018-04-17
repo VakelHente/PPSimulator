@@ -1,6 +1,8 @@
 import os
 import sys
 import platform
+import errno
+from collections import OrderedDict
 
 try:
     import settings
@@ -10,6 +12,7 @@ try:
     from util_lib.utilityPrint import printBrightGreen
     from util_lib.utilityPrint import getBrightGreenString
     from util_lib.utilityReader import processCommand
+    from util_lib.utilityYml import createYmlFile
 except ImportError as error:
     printRed(error)
     sys.exit(settings.ErrorCode.ERROR_IMPORT)
@@ -19,8 +22,9 @@ if platform.system() == "Windows":
 
 listUiFiles = ["GraphCreator", "ppSimulator", "ProtocolCreator"]
 listFolders = ["protocol", "graph", "result"]
+configFile = "settings"
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
+currentFilePath = os.path.dirname(os.path.realpath(__file__))
 errorCounter = 0
 NO_ERROR = 0
 
@@ -31,12 +35,14 @@ def setUp():
     @return: None
     """
     global errorCounter
+    printYellow("=" * 40)
     for uiFile in listUiFiles:
         printYellow("-I- Create {}.py file".format(uiFile))
         command = "pyuic5 -x {0}.ui -o {0}UI.py".format(uiFile)
-        if processCommand(command, dir_path):
-            printYellow("-I- File {}UI.py was created".format(uiFile))
+        if processCommand(command, currentFilePath):
+            printYellow("-I- File {}UI.py was created\n".format(uiFile))
         else:
+            printRed("-E- File {}UI.py was not created\n".format(uiFile))
             errorCounter += 1
 
     printYellow("="*40)
@@ -45,9 +51,10 @@ def setUp():
         printYellow("-I- Create {} folder".format(folder))
         command = "mkdir {}".format(folder)
 
-        if processCommand(command, dir_path):
-            printYellow("-I- Folder {} was created".format(folder))
+        if processCommand(command, currentFilePath):
+            printYellow("-I- Folder {} was created\n".format(folder))
         else:
+            printRed("-E- Folder {} was not created\n".format(folder))
             errorCounter += 1
 
     if (errorCounter == NO_ERROR):
@@ -55,10 +62,31 @@ def setUp():
     else:
         printRed("\n-E- Script finished with failure")
 
+    createSettings(configFile)
     input(getBrightGreenString("Press Enter to continue..."))
 
-if __name__ == "__main__":
-    if platform.system() == "Windows":
-        init()
+def silentRemoveFile(file, ext="yml"):
+    """
+    Remove provided file without any message. If There is different exception than "no such file or directory" raise it.
 
+    @return : None
+    """
+    try:
+        os.remove("{}.{}".format(file,ext))
+    except OSError as e:
+        if e.errno != errno.ENOENT:
+            raise e
+
+def createSettings(name):
+    """
+    Create configuration file which contain directory to graph, protocol and result. Also contain setup later features.
+
+    @name   : name of configuration file
+    @return : None
+    """
+    silentRemoveFile(name)
+    orderedConfig = OrderedDict([("name", "settings"), ("directories", OrderedDict([(elem, "{}\{}".format(currentFilePath,elem)) for elem in listFolders]))])
+    createYmlFile(name, orderedConfig, currentFilePath)
+
+if __name__ == "__main__":
     setUp()

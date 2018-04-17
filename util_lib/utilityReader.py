@@ -21,8 +21,8 @@ def processCommand(command, cwd):
         subprocess.check_output(shlex.split(command), stderr=subprocess.STDOUT, cwd=cwd, shell=True)
         return True
     except subprocess.CalledProcessError as error:
-        printRed(error.output.decode("utf-8"))
         printRed(error)
+        printRed(str(error.output.decode("utf-8")).strip())
         return False
 
 
