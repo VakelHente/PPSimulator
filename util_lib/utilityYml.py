@@ -69,9 +69,9 @@ def getYmlDict(ymlFile):
     @ymlFile    : File in yml format
     @return     : Parsed Dict
     """
-    with open(ymlFile, 'w') as file:
+    with open(ymlFile, 'r') as file:
         data = file.readlines()
-        return orderedLoad(data)
+        return orderedLoad("".join(data))
 
 if __name__ == "__main__":
     aaa = {"name": "configuration", "check": 1, "dupa": ["safdsafsda", 1, 2, "dfasasd"]}

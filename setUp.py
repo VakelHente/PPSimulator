@@ -49,6 +49,11 @@ def setUp():
 
     for folder in listFolders:
         printYellow("-I- Create {} folder".format(folder))
+
+        if os.path.isdir(folder):
+            printYellow("-I- Folder {} already exists".format(folder))
+            continue
+
         command = "mkdir {}".format(folder)
 
         if processCommand(command, currentFilePath):
@@ -85,7 +90,7 @@ def createSettings(name):
     @return : None
     """
     silentRemoveFile(name)
-    orderedConfig = OrderedDict([("name", "settings"), ("directories", OrderedDict([(elem, "{}\{}".format(currentFilePath,elem)) for elem in listFolders]))])
+    orderedConfig = OrderedDict([("name", "settings"), ("directories", OrderedDict([(elem, "\\".join([currentFilePath,elem])) for elem in listFolders]))])
     createYmlFile(name, orderedConfig, currentFilePath)
 
 if __name__ == "__main__":
