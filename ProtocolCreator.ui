@@ -434,7 +434,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Input Function (X -&gt; Q):</string>
+      <string>States Function (X -&gt; Q):</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_removeFromOutputFunction">
@@ -496,7 +496,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Input Function (X -&gt; Q):</string>
+      <string>Output Function (X -&gt; Q):</string>
      </property>
     </widget>
     <widget class="QComboBox" name="comboBox_secondElemOfOutpuFunc">
