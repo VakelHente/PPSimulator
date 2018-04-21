@@ -50,8 +50,8 @@ def setUp():
     for folder in listFolders:
         printYellow("-I- Create {} folder".format(folder))
 
-        if os.path.isdir(folder):
-            printYellow("-I- Folder {} already exists".format(folder))
+        if os.path.isdir("\\".join([currentFilePath,folder])):
+            printYellow("-I- Folder {} already exists\n".format(folder))
             continue
 
         command = "mkdir {}".format(folder)
