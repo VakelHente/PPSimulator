@@ -20,9 +20,10 @@ except ImportError as error:
 if platform.system() == "Windows":
     init()
 
-listUiFiles = ["GraphCreator", "ppSimulator", "ProtocolCreator"]
+listUiFiles = ["GraphCreator", "ppSimulator", "ProtocolCreator", "warningDialog"]
+UiDialog    = "warningDialog"
 listFolders = ["protocol", "graph", "result"]
-configFile = "settings"
+configFile  = "settings"
 
 currentFilePath = os.path.dirname(os.path.realpath(__file__))
 errorCounter = 0
@@ -37,8 +38,13 @@ def setUp():
     global errorCounter
     printYellow("=" * 40)
     for uiFile in listUiFiles:
-        printYellow("-I- Create {}.py file".format(uiFile))
-        command = "pyuic5 -x {0}.ui -o {0}UI.py".format(uiFile)
+        printYellow("-I- Create {}UI.py file".format(uiFile))
+
+        if uiFile == listUiFiles[-1]:
+            command = "pyuic5 -x dialogs/{0}.ui -o dialogs/{0}UI.py".format(uiFile)
+        else:
+            command = "pyuic5 -x {0}.ui -o {0}UI.py".format(uiFile)
+
         if processCommand(command, currentFilePath):
             printYellow("-I- File {}UI.py was created\n".format(uiFile))
         else:
