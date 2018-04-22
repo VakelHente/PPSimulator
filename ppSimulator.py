@@ -63,6 +63,8 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         self.PC = ProtocolCreator()
         self.PC.setWindowModality(QtCore.Qt.ApplicationModal)
         self.PC.show()
+        self.conTxtInfoP(self.PC)
+        self.conTxtPathP(self.PC)
 
     @QtCore.pyqtSlot()
     def btnProtocolFromFile_on_click(self):
@@ -113,6 +115,32 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         pass
 # endregion
 
+    @QtCore.pyqtSlot(str)
+    def txtPathProtocol_setText(self, string):
+        self.txtPathProtocol.setText(string)
+
+    @QtCore.pyqtSlot(str)
+    def txtInfoProtocol_setText(self, string):
+        self.txtInfoProtocol.setText(string)
+
+    def conTxtInfoP(self, lineEditObj):
+        """
+
+
+        @param lineEditObj  :
+        @return             :
+        """
+        lineEditObj.infoPToMain.connect(self.txtInfoProtocol_setText)
+
+    def conTxtPathP(self, lineEditObj):
+        """
+
+
+        @param lineEditObj  :
+        @return             :
+        """
+        lineEditObj.pathPToMain.connect(self.txtPathProtocol_setText)
+
     def validateProtocol(self, pathFile):
         """
         Validate protocol file in terms of attributes.
@@ -132,6 +160,7 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         pass
 
 def main():
+    st.init()
     app = QtWidgets.QApplication(sys.argv)
     window = PpSimulator()
     window.show()
@@ -142,7 +171,6 @@ if __name__ == "__main__":
     parser._action_groups.pop()
     feature_parser = parser.add_mutually_exclusive_group(required=False)
     feature_parser.add_argument('--debug', dest='feature', action='store_true')
-    feature_parser.add_argument('--no-debug', dest='feature', action='store_false')
     parser.set_defaults(feature=False)
 
     disableEnablePrint(parser.parse_args().feature)

@@ -59,7 +59,7 @@ def createYmlFile(name, data, path=currentFilePath, ext="yml"):
     @return : None
     """
     # TODO: add path to create file
-    with open("{}.{}".format(name,ext), 'w') as file:
+    with open("{}\\{}.{}".format(path, name, ext), 'w') as file:
         orderedDump(data, file, Dumper=yaml.SafeDumper, default_flow_style=False, explicit_start=True)
 
 def getYmlDict(ymlFile):

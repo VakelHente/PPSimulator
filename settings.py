@@ -16,15 +16,13 @@ except ImportError as error:
 
 # Global variables
 _appDir = _protocolDir = _graphDir = _resultDir = None
-_isDebug = False
 
 class Settings(ObjectDict):
     pass
 
-def init(isDebug):
-    global _appDir, _protocolDir, _graphDir, _resultDir, _isDebug
+def init():
+    global _appDir, _protocolDir, _graphDir, _resultDir
     _appDir = os.path.dirname(os.path.realpath(__file__))
-    _isDebug = isDebug
 
     orderDict = getYmlDict("\\".join([_appDir, "settings.yml"]))
 
