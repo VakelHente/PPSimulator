@@ -171,6 +171,12 @@ class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
         statesFunction = self.createTuple("statesFunction", self.listWidget_statesFunction)
         outputFunction = self.createTuple("outputFunction", self.listWidget_outputFunction)
         unOrderedTuple = [nameGroup, typeGroup, inputGroup, statesGroup, outputGroup, inputFunction, statesFunction, outputFunction]
+
+        for tup in unOrderedTuple:
+            if [] in tup:
+                self.showDialog("LW_{}".format(tup[0]))
+                return
+
         ppYml = OrderedDict(unOrderedTuple)
 
         createYmlFile(protocolName, ppYml, protocolPath)
@@ -178,7 +184,6 @@ class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
         self.pathPToMain.emit(protocolFile)
         with open(protocolFile, 'r') as pFile:
             self.infoPToMain.emit("".join(pFile.readlines()))
-            # print(pFile.readlines())
         self.close()
 # endregion
 

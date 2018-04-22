@@ -68,7 +68,10 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
 
     @QtCore.pyqtSlot()
     def btnProtocolFromFile_on_click(self):
-        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Single File', dir_path, '*.txt')
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Single File', st._protocolDir, '*.yml')
+        self.txtPathProtocol.setText(fileName)
+        with open(fileName, 'r') as pFile:
+            self.txtInfoProtocol.setText("".join(pFile.readlines()))
 
     @QtCore.pyqtSlot()
     def btnBrowse_Single_on_click(self):
