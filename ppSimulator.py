@@ -12,6 +12,7 @@ try:
     from graphCreator import GraphCreator
     from protocolCreator import ProtocolCreator
     from PyQt5 import QtCore, QtGui, QtWidgets
+    from dialogs.warnings import warnings, showDialog
 except ImportError as error:
     printRed(error)
     sys.exit(st.ErrorCode.ERROR_IMPORT)
@@ -50,13 +51,21 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
 #  region Method button on click
     @QtCore.pyqtSlot()
     def btnGraphCreate_Single_on_click(self):
-        GraphCreator(self.graphCreator)
-        self.graphCreator.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.graphCreator.show()
+
+        self.GC = GraphCreator()
+        self.GC.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        self.GC.show()
 
     @QtCore.pyqtSlot()
     def btnGraphFromFile_Single_on_click(self):
-        pass
+        pathToProtocol = self.txtPathProtocol.text()
+        if pathToProtocol.strip() == "":
+            showDialog("NoProtocol")
+            return
+        dictProtocol = pathToProtocol
+
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Single File', st._graphDir, '*.yml')
 
     @QtCore.pyqtSlot()
     def btnProtocolCreate_on_click(self):

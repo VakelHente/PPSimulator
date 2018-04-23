@@ -4,12 +4,11 @@ from collections import OrderedDict
 
 try:
     from util_lib.utilityPrint import printRed
-    from dialogs.warningDialogUI import Ui_warningDialog
     import settings as st
     from ProtocolCreatorUI import Ui_ProtocolCreator
     from PyQt5 import QtCore, QtGui, QtWidgets
     from util_lib.utilityYml import createYmlFile
-    from dialogs.warnings import warnings
+    from dialogs.warnings import warnings, showDialog
 except ImportError as error:
     printRed(error)
     sys.exit(st.ErrorCode.ERROR_IMPORT)
@@ -56,7 +55,6 @@ class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
         item = QtWidgets.QListWidgetItem(self.textBox_inputAlphabet.text())
         self.listWidget_inputAlphabet.addItem(item)
         self.comboBox_firstElemOfInputFunc.addItem(self.textBox_inputAlphabet.text())
-        self.comboBox_secondElemOfInputFunc.addItem(self.textBox_inputAlphabet.text())
 
     def btn_removeFromInputAlphabet_on_click(self):
         self.listWidget_inputAlphabet.takeItem(self.listWidget_inputAlphabet.currentRow())
@@ -66,10 +64,15 @@ class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
         self.listWidget_inputAlphabet.clear()
 
     def btn_addToStatesAlphabet_on_click(self):
-        item = QtWidgets.QListWidgetItem(self.textBox_stateAlphabet.text())
+        state = self.textBox_stateAlphabet.text()
+        item = QtWidgets.QListWidgetItem(state)
         self.listWidget_stateAlphabet.addItem(item)
-        self.comboBox_firstElemOfStatesFunc.addItem(self.textBox_stateAlphabet.text())
-        self.comboBox_secondElemOfStatesFunc.addItem(self.textBox_stateAlphabet.text())
+        self.comboBox_secondElemOfInputFunc.addItem(state)
+        self.comboBox_firstElemOfStatesFunc.addItem(state)
+        self.comboBox_secondElemOfStatesFunc.addItem(state)
+        self.comboBox_thirdElemOfStatesFunc.addItem(state)
+        self.comboBox_fourthElemOfStatesFunc.addItem(state)
+        self.comboBox_firstElemOfOutpuFunc.addItem(state)
 
     def btn_removeFromStatesAlphabet_on_click(self):
         self.listWidget_stateAlphabet.takeItem(self.listWidget_stateAlphabet.currentRow())
@@ -79,10 +82,10 @@ class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
         self.listWidget_stateAlphabet.clear()
 
     def btn_addToOutputAlphabet_on_click(self):
-        item = QtWidgets.QListWidgetItem(self.textBox_outputAlphabet.text())
+        output = self.textBox_outputAlphabet.text()
+        item = QtWidgets.QListWidgetItem(output)
         self.listWidget_outputAlphabet.addItem(item)
-        self.comboBox_firstElemOfOutpuFunc.addItem(self.textBox_outputAlphabet.text())
-        self.comboBox_secondElemOfOutpuFunc.addItem(self.textBox_outputAlphabet.text())
+        self.comboBox_secondElemOfOutpuFunc.addItem(output)
 
     def btn_removeFromOutputAlphabet_on_click(self):
         self.listWidget_outputAlphabet.takeItem(self.listWidget_outputAlphabet.currentRow())
@@ -152,10 +155,10 @@ class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
         protocolPath = self.lineEdit_pathProtocol.text()
 
         if protocolName.strip() == "":
-            self.showDialog("emptyPName")
+            showDialog("emptyPName")
             return
         elif '.' in protocolName:
-            self.showDialog("noExt")
+            showDialog("noExt")
             return
 
         nameGroup = ("name", protocolName)
@@ -186,19 +189,6 @@ class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
             self.infoPToMain.emit("".join(pFile.readlines()))
         self.close()
 # endregion
-
-    def showDialog(self, key):
-        """
-        Show dialog with provided key to warnings dict.
-
-        @param key  : key to warnings dict
-        @return     : None
-        """
-        warningDialog = QtWidgets.QDialog()
-        warningDialog.ui = Ui_warningDialog()
-        warningDialog.ui.setupUi(warningDialog)
-        warningDialog.ui.label_warningMessage.setText(warnings[key])
-        warningDialog.exec_()
 
     def createTuple(self, key, value):
         """
