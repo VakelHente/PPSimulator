@@ -344,7 +344,7 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>131</width>
+       <width>150</width>
        <height>20</height>
       </rect>
      </property>
@@ -429,12 +429,12 @@
       <rect>
        <x>10</x>
        <y>233</y>
-       <width>131</width>
+       <width>150</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>States Function (X -&gt; Q):</string>
+      <string>States Function (Q -&gt; Q):</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_removeFromOutputFunction">
@@ -491,12 +491,12 @@
       <rect>
        <x>10</x>
        <y>435</y>
-       <width>131</width>
+       <width>150</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Output Function (X -&gt; Q):</string>
+      <string>Output Function (Q -&gt; Y):</string>
      </property>
     </widget>
     <widget class="QComboBox" name="comboBox_secondElemOfOutpuFunc">
@@ -655,7 +655,7 @@
       <rect>
        <x>30</x>
        <y>60</y>
-       <width>82</width>
+       <width>100</width>
        <height>17</height>
       </rect>
      </property>
@@ -671,7 +671,7 @@
       <rect>
        <x>30</x>
        <y>80</y>
-       <width>82</width>
+       <width>100</width>
        <height>17</height>
       </rect>
      </property>
