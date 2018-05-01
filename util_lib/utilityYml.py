@@ -54,11 +54,16 @@ def orderedDump(data, stream=None, Dumper=yaml.Dumper, **kwds):
 
 def createYmlFile(name, data, path=currentFilePath, ext="yml"):
     """
-    Create yml file from provided dict.
+    Create yml file from provided data.
 
-    @return : None
+    @param name     : Name of file where data will be saved
+    @param data     : Ordered dict or simple dict data
+    @param path     : Path where to save yml file (Default path of utilityYml.py file)
+    @param ext      : Extension of file (Default "yml")
+    @return         : None
     """
     # TODO: add path to create file
+
     with open("{}\\{}.{}".format(path, name, ext), 'w') as file:
         orderedDump(data, file, Dumper=yaml.SafeDumper, default_flow_style=False, explicit_start=True)
 
@@ -72,6 +77,15 @@ def getYmlDict(ymlFile):
     with open(ymlFile, 'r') as file:
         data = file.readlines()
         return orderedLoad("".join(data))
+
+def getYmlString(data):
+    """
+    Get yml string from provided data
+
+    @param data : Ordered dict or simple dict data
+    @return     : Yaml string
+    """
+    return orderedDump(data, Dumper=yaml.SafeDumper, default_flow_style=False, explicit_start=True)
 
 if __name__ == "__main__":
     aaa = {"name": "configuration", "check": 1, "dupa": ["safdsafsda", 1, 2, "dfasasd"]}
@@ -94,5 +108,22 @@ if __name__ == "__main__":
             ))
         ]
     )
+    aa = [
+            (u'name', u'Alice'),
+            (u'ID', OrderedDict(
+                [
+                    (u'type', u'card'),
+                    (u'nr', u'123')
+                ]
+            )),
+            (u'name', u'Bob'),
+            (u'ID', OrderedDict(
+                [
+                    (u'type', u'passport'),
+                    (u'nr', u'567')
+                ]
+            )),
+        ]
+    order = OrderedDict(aa)
     # print(yaml.dump(range(5), default_flow_style=False))
     createYmlFile("xyz", od)

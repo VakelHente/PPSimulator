@@ -19,10 +19,12 @@ warnings = {
     "LW_statesFunction"     : "No states function.",
     "LW_outputFunction"     : "No output function.",
     "LowNBNodes"            : "Number of nodes must be at least 2.",
-    "NoProtocol"            : "No protocol selected."
+    "NoProtocol"            : "No protocol selected.",
+    "NoSymbol"              : "No symbol added.",
+    "NoNbNodes"             : "No number of nodes."
 }
 
-def showDialog(self, key):
+def showDialog(key):
     """
     Show dialog with provided key to warnings dict.
 

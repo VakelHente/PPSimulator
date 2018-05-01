@@ -51,7 +51,7 @@
     <property name="title">
      <string>Define graph</string>
     </property>
-    <widget class="QTreeWidget" name="listNode">
+    <widget class="QTableWidget" name="listWidget_node">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -72,38 +72,38 @@
        <height>111</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Sunken</enum>
      </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
      <property name="showDropIndicator" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="rootIsDecorated">
-      <bool>true</bool>
-     </property>
-     <property name="itemsExpandable">
       <bool>false</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="showGrid">
+      <bool>false</bool>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::SolidLine</enum>
      </property>
      <property name="sortingEnabled">
       <bool>false</bool>
      </property>
-     <property name="allColumnsShowFocus">
+     <attribute name="verticalHeaderVisible">
       <bool>false</bool>
-     </property>
-     <property name="headerHidden">
-      <bool>false</bool>
-     </property>
-     <attribute name="headerVisible">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="headerDefaultSectionSize">
-      <number>79</number>
-     </attribute>
-     <attribute name="headerMinimumSectionSize">
-      <number>70</number>
      </attribute>
      <column>
       <property name="text">
@@ -208,7 +208,7 @@
      </rect>
     </property>
     <property name="inputMethodHints">
-     <set>Qt::ImhPreferNumbers</set>
+     <set>Qt::ImhDigitsOnly</set>
     </property>
     <property name="readOnly">
      <bool>true</bool>

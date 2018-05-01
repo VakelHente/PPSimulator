@@ -13,6 +13,9 @@ try:
     from protocolCreator import ProtocolCreator
     from PyQt5 import QtCore, QtGui, QtWidgets
     from dialogs.warnings import warnings, showDialog
+    from util_lib.utilityYml import getYmlDict
+    from util_lib.utilityDict import dictToObj
+    from protocol import Protocol
 except ImportError as error:
     printRed(error)
     sys.exit(st.ErrorCode.ERROR_IMPORT)
@@ -51,11 +54,16 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
 #  region Method button on click
     @QtCore.pyqtSlot()
     def btnGraphCreate_Single_on_click(self):
-
-        self.GC = GraphCreator()
+        pathToProtocol = self.txtPathProtocol.text()
+        if pathToProtocol.strip() == "":
+            showDialog("NoProtocol")
+            return
+        objProtocol = dictToObj(Protocol, getYmlDict(pathToProtocol))
+        self.GC = GraphCreator(objProtocol.input)
         self.GC.setWindowModality(QtCore.Qt.ApplicationModal)
-
         self.GC.show()
+        self.conTxtPathG(self.GC)
+        self.conTxtInfoG(self.GC)
 
     @QtCore.pyqtSlot()
     def btnGraphFromFile_Single_on_click(self):
@@ -63,7 +71,7 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         if pathToProtocol.strip() == "":
             showDialog("NoProtocol")
             return
-        dictProtocol = pathToProtocol
+        objProtocol = dictToObj(Protocol, getYmlDict(pathToProtocol))
 
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Single File', st._graphDir, '*.yml')
 
@@ -135,23 +143,49 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
     def txtInfoProtocol_setText(self, string):
         self.txtInfoProtocol.setText(string)
 
-    def conTxtInfoP(self, lineEditObj):
+    @QtCore.pyqtSlot(str)
+    def txtPathGraph_setText(self, string):
+        self.txtPathGraph_Single.setText(string)
+
+    @QtCore.pyqtSlot(str)
+    def txtInfoGraph_setText(self, string):
+        self.txtInfoGraph_Single.setText(string)
+
+    def conTxtInfoP(self, protocolWindow):
         """
 
 
         @param lineEditObj  :
-        @return             :
+        @return             : None
         """
-        lineEditObj.infoPToMain.connect(self.txtInfoProtocol_setText)
+        protocolWindow.infoPToMain.connect(self.txtInfoProtocol_setText)
 
-    def conTxtPathP(self, lineEditObj):
+    def conTxtPathP(self, protocolWindow):
         """
 
 
         @param lineEditObj  :
-        @return             :
+        @return             : None
         """
-        lineEditObj.pathPToMain.connect(self.txtPathProtocol_setText)
+        protocolWindow.pathPToMain.connect(self.txtPathProtocol_setText)
+
+    def conTxtPathG(self, graphWindow):
+        """
+
+
+        @param graphWindow  :
+        @return             : None
+        """
+        graphWindow.pathGToMain.connect(self.txtPathGraph_setText)
+
+    def conTxtInfoG(self, graphWindow):
+        """
+
+
+        @param graphWindow  :
+        @return             : None
+        """
+        graphWindow.infoGToMain.connect(self.txtInfoGraph_setText)
 
     def validateProtocol(self, pathFile):
         """
