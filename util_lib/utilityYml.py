@@ -83,7 +83,7 @@ def getYmlString(data):
     Get yml string from provided data
 
     @param data : Ordered dict or simple dict data
-    @return     : Yaml string
+    @return     : Yml string
     """
     return orderedDump(data, Dumper=yaml.SafeDumper, default_flow_style=False, explicit_start=True)
 

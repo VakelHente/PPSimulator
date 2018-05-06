@@ -8,7 +8,7 @@ class ObjectDict(dict):
             try:
                 return self[key]
             except KeyError:
-                raise AttributeError(key)
+                raise AttributeError("{} class does not contain {} attribute.".format(self.__class__.__name__, key))
 
     def __setattr__(self, key, value):
         try:
