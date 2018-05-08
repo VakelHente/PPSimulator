@@ -21,7 +21,8 @@ warnings = {
     "LowNBNodes"            : "Number of nodes must be at least 2.",
     "NoProtocol"            : "No protocol selected.",
     "NoSymbol"              : "No symbol added.",
-    "NoNbNodes"             : "No number of nodes."
+    "NoNbNodes"             : "No number of nodes.",
+    "InvalidPpOrG"          : "Invalid protocol or graph.\n For more information run simulator with --debug flag"
 }
 
 def showDialog(key):

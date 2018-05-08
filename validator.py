@@ -10,10 +10,10 @@ except ImportError as error:
     sys.exit(st.ErrorCode.ERROR_IMPORT)
 
 
-class SwitchPP(object):
+class SwitchPpG(object):
     def switchCase(self, attributeChecker):
         """
-        Dispatch method to check correctness of Population protocol obj.
+        Dispatch method to check correctness of Population protocol or graph obj.
 
         @param attributeChecker : Attribute to check of the population protocol obj
         @return                 : Method to check specific attribute
@@ -21,16 +21,15 @@ class SwitchPP(object):
         method = getattr(self, attributeChecker, lambda _: False)
         return method
 
-    def name(self, ppObj):
+    def name(self, obj):
         """
         Check if the name attribute is valid.
 
-        @param ppObj     : Population protocol obj
-        @param attribute : Attribute of the population protocol obj
+        @param obj       : Population protocol or graph obj
         @return          : True if the attribute is valid otherwise False
         """
         try:
-            name = getattr(ppObj, "name")
+            name = getattr(obj, "name")
             if name.strip() != "":
                 return True
             else:
@@ -40,15 +39,15 @@ class SwitchPP(object):
             printRed(error)
             return False
 
-    def protocolType(self, ppObj):
+    def protocolType(self, obj):
         """
         Check if the protocolType is valid.
 
-        @param ppObj : Population protocol obj
+        @param obj   : Population protocol or graph obj
         @return      : True if the attribute is valid otherwise False
         """
         try:
-            protocolType = getattr(ppObj, "protocolType")
+            protocolType = getattr(obj, "protocolType")
             strippedProtocolType = protocolType.strip()
             if strippedProtocolType == "Leader Election":
                 return True
@@ -64,15 +63,15 @@ class SwitchPP(object):
             printRed(error)
             return False
 
-    def input(self, ppObj):
+    def input(self, obj):
         """
         Check if the input is valid.
 
-        @param ppObj : Population protocol obj
+        @param obj   : Population protocol or graph obj
         @return      : True if the attribute is valid otherwise False
         """
         try:
-            input = getattr(ppObj, "input")
+            input = getattr(obj, "input")
             if isinstance(input, list):
                 if not len(input) > 0:
                     printRed("List of inputs does not contain single input.")
@@ -84,15 +83,15 @@ class SwitchPP(object):
             return False
         return True
 
-    def states(self, ppObj):
+    def states(self, obj):
         """
         Check if the states is valid.
 
-        @param ppObj : Population protocol obj
+        @param obj   : Population protocol or graph obj
         @return      : True if the attribute is valid otherwise False
         """
         try:
-            states = getattr(ppObj, "states")
+            states = getattr(obj, "states")
             if isinstance(states, list):
                 if not len(states) > 0:
                     printRed("List of states does not contain single state.")
@@ -104,15 +103,15 @@ class SwitchPP(object):
             return False
         return True
 
-    def output(self, ppObj):
+    def output(self, obj):
         """
         Check if the output is valid.
 
-        @param ppObj : Population protocol obj
+        @param obj   : Population protocol or graph obj
         @return      : True if the attribute is valid otherwise False
         """
         try:
-            output = getattr(ppObj, "output")
+            output = getattr(obj, "output")
             if isinstance(output, list):
                 if not len(output) > 0:
                     printRed("List of outputs does not contain single output.")
@@ -124,19 +123,19 @@ class SwitchPP(object):
             return False
         return True
 
-    def inputFunction(self, ppObj):
+    def inputFunction(self, obj):
         """
         Check if the input function is valid.
 
-        @param ppObj : Population protocol obj
+        @param obj   : Population protocol or graph obj
         @return      : True if the attribute is valid otherwise False
         """
         try:
-            inputFunction = getattr(ppObj, "inputFunction")
+            inputFunction = getattr(obj, "inputFunction")
             for function in inputFunction:
                 firstElem, secondElem = self.findXYQBetween(function)
-                input = getattr(ppObj, "input")
-                states = getattr(ppObj, "states")
+                input = getattr(obj, "input")
+                states = getattr(obj, "states")
                 if firstElem not in input:
                     raise ProtocolItemError(function, "inputFunction")
                 if secondElem not in states:
@@ -149,18 +148,18 @@ class SwitchPP(object):
             return False
         return True
 
-    def statesFunction(self, ppObj):
+    def statesFunction(self, obj):
         """
         Check if the states function is valid.
 
-        @param ppObj : Population protocol obj
+        @param obj   : Population protocol or graph obj
         @return      : True if the attribute is valid otherwise False
         """
         try:
-            inputFunction = getattr(ppObj, "statesFunction")
+            inputFunction = getattr(obj, "statesFunction")
             for function in inputFunction:
                 initiator, responder = self.findQQ_QQBetween(function)
-                states = getattr(ppObj, "states")
+                states = getattr(obj, "states")
                 # TODO different finding.
                 for i in range(2):
                     if initiator[i] and responder[i] not in states:
@@ -173,19 +172,19 @@ class SwitchPP(object):
             return False
         return True
 
-    def outputFunction(self, ppObj):
+    def outputFunction(self, obj):
         """
         Check if the output function is valid.
 
-        @param ppObj : Population protocol obj
+        @param obj   : Population protocol or graph obj
         @return      : True if the attribute is valid otherwise False
         """
         try:
-            inputFunction = getattr(ppObj, "outputFunction")
+            inputFunction = getattr(obj, "outputFunction")
             for function in inputFunction:
                 firstElem, secondElem = self.findXYQBetween(function)
-                states = getattr(ppObj, "states")
-                output = getattr(ppObj, "output")
+                states = getattr(obj, "states")
+                output = getattr(obj, "output")
                 if firstElem not in states:
                     raise ProtocolItemError(function, "outputFunction")
                 if secondElem not in output:
@@ -197,6 +196,53 @@ class SwitchPP(object):
             printRed(error)
             return False
         return True
+
+    def numberNodes(self, obj):
+        """
+        Check if the number nodes is valid.
+
+        @param obj  : Population protocol or graph obj
+        @return     : True if the attribute is valid otherwise False
+        """
+        try:
+            numberNodes = getattr(obj, "numberNodes")
+            if int(numberNodes.strip()) > 1:
+                return True
+            else:
+                printRed("Number of nodes must be higher than 1.")
+                return False
+        except AttributeError as error:
+            printRed(error)
+            return False
+        except ValueError as error:
+            printRed(error)
+            return False
+
+    def agent(self, obj):
+        """
+        Check if the agent is valid.
+
+        @param obj  : Population protocol or graph obj
+        @return     : True if the attribute is valid otherwise False
+        """
+        try:
+            name = getattr(obj, "agent")
+            if isinstance(name, list):
+                numberNodes = getattr(obj, "numberNodes")
+                if len(name) == int(numberNodes.strip()):
+                    return True
+                else:
+                    printRed("Number of nodes and agents must be equal.")
+                    return False
+            else:
+                printRed("Number of agents must be higher than 1.")
+                return False
+        except AttributeError as error:
+            printRed(error)
+            return False
+        except ValueError as error:
+            printRed(error)
+            return False
 
     def findXYQBetween(self, string):
         """
@@ -219,6 +265,6 @@ class SwitchPP(object):
         """
         initiator = re.findall("{}([a-zA-Z0-9]+){}".format(re.escape('('), re.escape(',')), string)
         responder = re.findall("{}([a-zA-Z0-9]+){}".format(re.escape(','), re.escape(')')), string)
-        if len(initiator) != 2 or len(responder) != 2 :
+        if len(initiator) != 2 or len(responder) != 2:
             raise ProtocolItemError(string)
         return initiator, responder

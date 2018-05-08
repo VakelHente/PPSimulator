@@ -2,21 +2,22 @@ import sys
 import platform
 import os
 import argparse
+from collections import Counter, OrderedDict
 
 try:
-    from util_lib.utilityPrint import printRed
-    from util_lib.utilityPrint import disableEnablePrint
+    from util_lib.utilityPrint import printRed, disableEnablePrint, printBrightGreen
     from colorama import init
-    import settings as st
     from ppSimulatorUI import Ui_MainWindow
     from graphCreator import GraphCreator
     from protocolCreator import ProtocolCreator
     from PyQt5 import QtCore, QtGui, QtWidgets
     from dialogs.warnings import warnings, showDialog
-    from util_lib.utilityYml import getYmlDict
+    from util_lib.utilityYml import getYmlDict, getYmlString
     from util_lib.utilityDict import dictToObj
     from protocol import Protocol
+    from validator import SwitchPpG
     import yaml
+    import settings as st
 except ImportError as error:
     printRed(error)
     sys.exit(st.ErrorCode.ERROR_IMPORT)
@@ -26,6 +27,7 @@ if platform.system() == "Windows":
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 protocolAttrChecker = ["name", "protocolType", "input", "states", "output", "inputFunction", "statesFunction", "outputFunction"]
+graphAttrChecker = ["name", "numberNodes", "agent"]
 
 class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -76,6 +78,12 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         objProtocol = dictToObj(Protocol, getYmlDict(pathToProtocol))
 
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Single File', st._graphDir, '*.yml')
+        grStatYml = getYmlDict(fileName)
+        agents = grStatYml.pop("agent", None)
+        grStatYml['agentStatistic'] =  OrderedDict(Counter(agents))
+        data = getYmlString(grStatYml)
+        self.txtPathGraph_Single.setText(fileName)
+        self.txtInfoGraph_Single.setText(data)
 
     def btnProtocolCreate_on_click(self):
         self.PC = ProtocolCreator()
@@ -104,7 +112,8 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         self.txtNumberRepetitions_Single.clear()
 
     def btnStart_Single_on_click(self):
-        pass
+        if not (self.validateGraph(self.txtPathGraph_Single.text()) and self.validateProtocol(self.txtPathProtocol.text())):
+            print("cos poszlo nie tak")
 
     def btnYAMLCreate_Multi_on_click(self):
         pass
@@ -190,11 +199,20 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         @param pathFile : Path to protocol file
         @return         : True if protocol is correct False otherwise
         """
+        protocolValid = True
         try:
-            pDict = getYmlDict(pathFile)
+            ppObj = getYmlDict(pathFile)
+            printBrightGreen("======Validate protocol population======")
+            for attr in protocolAttrChecker:
+                if SwitchPpG.switchCase(attr)(ppObj):
+                    printBrightGreen("attr: (VALID)")
+                else:
+                    printBrightGreen("attr: (NOT VALID)")
+                    protocolValid = False
         except yaml.scanner.ScannerError as error:
             printRed(error)
             return False
+        return protocolValid
 
     def validateGraph(self, pathFile):
         """
@@ -203,7 +221,20 @@ class PpSimulator(QtWidgets.QMainWindow, Ui_MainWindow):
         :param pathFile : Path to graph file
         :return         : True if graph is correct False otherwise
         """
-        pass
+        graphValid = True
+        try:
+            ppObj = getYmlDict(pathFile)
+            printBrightGreen("======Validate graph======")
+            for attr in graphAttrChecker:
+                if SwitchPpG.switchCase(attr)(ppObj):
+                    printBrightGreen("attr: (VALID)")
+                else:
+                    printBrightGreen("attr: (NOT VALID)")
+                    graphValid = False
+        except yaml.scanner.ScannerError as error:
+            printRed(error)
+            return False
+        return graphValid
 
 def main():
     st.init()

@@ -181,3 +181,4 @@ class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
 
 if __name__ == "__main__":
     pass
+    #TODO: add https://forum.qt.io/topic/9171/solved-how-can-a-lineedit-accept-only-ascii-alphanumeric-character-required-a-z-a-z-0-9/8
