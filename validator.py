@@ -206,10 +206,14 @@ class SwitchPpG(object):
         """
         try:
             numberNodes = getattr(obj, "numberNodes")
-            if int(numberNodes.strip()) > 1:
-                return True
+            if isinstance(numberNodes, int):
+                if numberNodes > 1:
+                    return True
+                else:
+                    printRed("Number of nodes must be higher than 1.")
+                    return False
             else:
-                printRed("Number of nodes must be higher than 1.")
+                printRed("Attribute numberNodes is not integer instance.")
                 return False
         except AttributeError as error:
             printRed(error)
@@ -218,24 +222,24 @@ class SwitchPpG(object):
             printRed(error)
             return False
 
-    def agent(self, obj):
+    def nodes(self, obj):
         """
-        Check if the agent is valid.
+        Check if the nodes is valid.
 
         @param obj  : Population protocol or graph obj
         @return     : True if the attribute is valid otherwise False
         """
         try:
-            name = getattr(obj, "agent")
+            name = getattr(obj, "nodes")
             if isinstance(name, list):
                 numberNodes = getattr(obj, "numberNodes")
-                if len(name) == int(numberNodes.strip()):
+                if len(name) == numberNodes:
                     return True
                 else:
-                    printRed("Number of nodes and agents must be equal.")
+                    printRed("Number of nodes and nodes must be equal.")
                     return False
             else:
-                printRed("Number of agents must be higher than 1.")
+                printRed("Number of nodes must be higher than 1.")
                 return False
         except AttributeError as error:
             printRed(error)

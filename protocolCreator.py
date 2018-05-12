@@ -6,7 +6,8 @@ try:
     from util_lib.utilityPrint import printRed
     import settings as st
     from ProtocolCreatorUI import Ui_ProtocolCreator
-    from PyQt5 import QtCore, QtGui, QtWidgets
+    from PyQt5 import QtGui, QtWidgets
+    from PyQt5.QtCore import QRegExp, pyqtSignal
     from util_lib.utilityYml import createYmlFile
     from dialogs.warnings import warnings, showDialog
 except ImportError as error:
@@ -14,14 +15,18 @@ except ImportError as error:
     sys.exit(st.ErrorCode.ERROR_IMPORT)
 
 class ProtocolCreator(QtWidgets.QMainWindow, Ui_ProtocolCreator):
-    pathPToMain = QtCore.pyqtSignal(str)
-    infoPToMain = QtCore.pyqtSignal(str)
+    pathPToMain = pyqtSignal(str)
+    infoPToMain = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
         self.lineEdit_pathProtocol.setText(st._protocolDir)
+        rx = QRegExp("[A-Za-z0-9]+")
+        self.textBox_inputAlphabet.setValidator(QtGui.QRegExpValidator(rx))
+        self.textBox_stateAlphabet.setValidator(QtGui.QRegExpValidator(rx))
+        self.textBox_outputAlphabet.setValidator(QtGui.QRegExpValidator(rx))
 
         # Protocol's sets group
         self.btn_addToInputAlphabet.clicked.connect(self.btn_addToInputAlphabet_on_click)

@@ -6,8 +6,8 @@ try:
     from util_lib.utilityPrint import printRed, disableEnablePrint
     import settings as st
     from GraphCreatorUI import Ui_GraphCreator
-    from PyQt5 import QtGui, QtWidgets, QtCore
-    from PyQt5.QtCore import QRegExp, Qt
+    from PyQt5 import QtGui, QtWidgets
+    from PyQt5.QtCore import QRegExp, Qt, pyqtSignal
     from PyQt5.QtWidgets import QAbstractItemView
     from dialogs.warnings import warnings, showDialog
     from util_lib.utilityDict import ObjectDict
@@ -20,8 +20,8 @@ class Graph(ObjectDict):
     pass
 
 class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
-    pathGToMain = QtCore.pyqtSignal(str)
-    infoGToMain = QtCore.pyqtSignal(str)
+    pathGToMain = pyqtSignal(str)
+    infoGToMain = pyqtSignal(str)
 
     def __init__(self, listItems):
         super().__init__()
@@ -68,7 +68,6 @@ class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
         self.listWidget_node.removeRow(self.listWidget_node.currentRow())
 
     def btnOk_click(self):
-
         if self.checkBxIfRandom.isChecked():
             try:
                 numberOfNodes = int(self.txtBxNumberOfNodes.text())
@@ -78,13 +77,13 @@ class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
 
             if numberOfNodes > 1:
                 listNodesForInput = self.generateValuesSumTo(numberOfNodes, len(self.listItems))
-                agentList = []
-                agentStatistic = OrderedDict()
+                nodesList = []
+                nodesStatistic = OrderedDict()
                 for index, value in enumerate(listNodesForInput):
-                    agentList += [self.listItems[index] for i in range(value)]
-                    agentStatistic[self.listItems[index]] = value
+                    nodesList += [self.listItems[index] for i in range(value)]
+                    nodesStatistic[self.listItems[index]] = value
 
-                self.createGraph(numberOfNodes, agentList, agentStatistic)
+                self.createGraph(numberOfNodes, nodesList, nodesStatistic)
             else:
                 showDialog("LowNBNodes")
                 return
@@ -98,35 +97,35 @@ class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
                 for i in range(rowCount):
                     qTableItems.append([int(self.listWidget_node.item(i, j).text()) if j==1 else self.listWidget_node.item(i, j).text() for j in range(columnCount)])
 
-                agentList = [qTableItem[0] for qTableItem in qTableItems for i in range(qTableItem[1])]
+                nodesList = [qTableItem[0] for qTableItem in qTableItems for i in range(qTableItem[1])]
                 numberOfNodes = sum([int(qItem[1]) for qItem in qTableItems])
-                agentStatistic = OrderedDict(qTableItems)
+                nodesStatistic = OrderedDict(qTableItems)
 
-                self.createGraph(numberOfNodes, agentList, agentStatistic)
+                self.createGraph(numberOfNodes, nodesList, nodesStatistic)
 
     def btnClear_click(self):
         self.listWidget_node.clear()
         self.txtBxNumberOfSymbol.clear()
         self.txtBxNumberOfNodes.clear()
 # endregion
-    def createGraph(self, nodes, agentsList, agentStatistic):
+    def createGraph(self, nodes, nodesList, nodesStatistic):
         """
         Create yml graph and emit path with data to main window
 
         @param nodes            : Entire number of nodes in graph
-        @param agentsList       : List of agents
-        @param agentStatistic   : Statistic of each agent
+        @param nodesList        : List of nodes
+        @param nodesStatistic   : Statistic of nodes
         @return                 : None
         """
-        graphName = self.createName(nodes, agentStatistic)
+        graphName = self.createName(nodes, nodesStatistic)
         nameGroup = ("name", graphName)
         nodeGroup = ("numberNodes", nodes)
-        agentGroup = ("agent", agentsList)
-        grYml = OrderedDict([nameGroup, nodeGroup, agentGroup])
+        nodesGroup = ("nodes", nodesList)
+        grYml = OrderedDict([nameGroup, nodeGroup, nodesGroup])
 
-        agentStatisticGroup = ("agentStatistic", agentStatistic)
+        nodesStatisticGroup = ("nodesStatistic", nodesStatistic)
 
-        grStatYml = OrderedDict([nameGroup, nodeGroup, agentStatisticGroup])
+        grStatYml = OrderedDict([nameGroup, nodeGroup, nodesStatisticGroup])
         createYmlFile(graphName, grYml, st._graphDir)
         data = getYmlString(grStatYml)
         graphFilePath = "\\".join([st._graphDir, graphName + ".yml"])
@@ -135,16 +134,16 @@ class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
         self.infoGToMain.emit(data)
         self.close()
 
-    def createName(self, nodes, agentsStatistic):
+    def createName(self, nodes, nodesStatistic):
         """
         Create graph name based on argument.
 
         @param nodes                : Entire number of nodes in graph
-        @param agentsStatistic      : Statistic of each agent
+        @param nodesStatistic       : Statistic of nodes
         @return                     : Graph name
         """
         graphName = "graph_{}nodes".format(nodes)
-        for key, value in agentsStatistic.items():
+        for key, value in nodesStatistic.items():
             graphName += "_{}{}".format(value, key)
 
         return graphName
@@ -178,7 +177,5 @@ class GraphCreator(QtWidgets.QMainWindow, Ui_GraphCreator):
             self.groupBxDefineGraph.setDisabled(False)
             self.txtBxNumberOfNodes.setReadOnly(True)
 
-
 if __name__ == "__main__":
     pass
-    #TODO: add https://forum.qt.io/topic/9171/solved-how-can-a-lineedit-accept-only-ascii-alphanumeric-character-required-a-z-a-z-0-9/8
